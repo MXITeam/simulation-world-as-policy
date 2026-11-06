@@ -96,7 +96,7 @@ footer.prose { margin-top: 100px; margin-bottom: 36px; padding-top: 22px; border
 [data-phase="2"] .selected .branch-bg, [data-phase="3"] .selected .branch-bg { fill: #0f1a2a; stroke: #afc8e9; }
 [data-phase="2"] .selected .branch-status, [data-phase="3"] .selected .branch-status { fill: #e1edff; }
 [data-phase="2"] .chosen-link, [data-phase="3"] .chosen-link { opacity: 1; stroke: #cadcf5; }
-[data-phase="3"] .execution-path { opacity: 1; animation: trajectory 1s linear infinite; }
+[data-phase="4"] .execution-path { opacity: 1; animation: trajectory 1s linear infinite; }
 [data-phase="3"] .feedback-path { stroke: #9ab6d9; stroke-dasharray: 4 5; animation: trajectory 1s linear infinite; }
 @keyframes trajectory { to { stroke-dashoffset: -20; } }
 @keyframes scan-depth { 0% { transform: translateY(-45px); opacity: .2; } 50% { opacity: 1; } 100% { transform: translateY(45px); opacity: .2; } }
@@ -127,13 +127,6 @@ footer.prose { margin-top: 100px; margin-bottom: 36px; padding-top: 22px; border
   .scene-panel p { padding: 14px; }
   footer.prose { margin-top: 56px; flex-wrap: wrap; }
 }
-@media (max-width: 700px) {
-  .system-diagram .diagram-headings, .system-diagram > .note, .system-diagram > rect, .system-diagram .fork { display: none; }
-  .system-diagram .small-title { font-size: 16px; }
-  .system-diagram .note { font-size: 14px; }
-  .system-diagram .micro { font-size: 12px; }
-  .mobile-bridge { display: block; }
-}
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .live-figure * { animation: none !important; transition: none !important; }
@@ -153,3 +146,127 @@ footer.prose { margin-top: 100px; margin-bottom: 36px; padding-top: 22px; border
 .asset-picker select { background:#10151d; color:var(--ink); border:1px solid #46556b; border-radius:4px; padding:9px 30px 9px 12px; font:inherit; cursor:pointer; }
 .asset-picker select:focus-visible { outline:2px solid #bfd0e7; outline-offset:3px; }
 .asset-selection-status { color:#9caec4; }
+
+
+/* Editorial overview: three scenes, one selected route, one feedback line. */
+.overview-index { fill: #7b8794; font: 10px ui-monospace, "PingFang SC", monospace; letter-spacing: 1.5px; }
+.overview-divider { stroke: #20252b; stroke-width: 1; }
+.overview-title { fill: #dce2e9; font-size: 19px; font-weight: 400; letter-spacing: -.4px; }
+.overview-note { fill: #8f9aa8; font-size: 11px; }
+.overview-footnote { fill: #64707e; font-size: 10px; }
+.agent-wordmark { fill: #dce2e9; font-size: 18px; font-weight: 500; letter-spacing: -.4px; }
+.overview-arrow { stroke: #7d8998; }
+.route-selected { fill: none; stroke: #c2d3b5; stroke-width: 2; }
+.route-failed { fill: none; stroke: #997e70; stroke-width: 1; stroke-dasharray: 2 5; opacity: .6; }
+.route-alternative { fill: none; stroke: #68798e; stroke-width: 1; stroke-dasharray: 2 5; opacity: .5; }
+.target-point { fill: #000; stroke: #c2d3b5; stroke-width: 1.2; }
+.repair-path { stroke: #637081; stroke-dasharray: 2 5; }
+[data-phase="1"] .repair-path { animation: trajectory 2s linear infinite; }
+[data-phase="2"] .route-selected, [data-phase="3"] .route-selected { stroke: #dfebd6; stroke-width: 2.5; }
+.overview-controls { display: flex; justify-content: space-between; align-items: center; gap: 24px; padding: 6px 0 18px; border-bottom: 1px solid var(--rule); }
+.overview-controls .diagram-phase { color: #8592a1; font: 10px ui-monospace, "PingFang SC", monospace; }
+.overview-controls .asset-picker { padding: 0; gap: 10px; font-size: 10px; }
+.overview-controls select { border: 0; border-bottom: 1px solid #323b46; border-radius: 0; background: #000; padding: 5px 20px 5px 4px; color: #b5bfcc; }
+@media (max-width: 760px) {
+  .diagram-scroll { overflow-x: auto; }
+  .system-diagram { min-width: 900px; }
+  .overview-controls { flex-wrap: wrap; gap: 10px; }
+}
+
+/* A minimal twin is cloned into independent rollout branches. */
+.trial-result { fill: #897e76; font-size: 12px; }
+.winner .trial-result { fill: #c2d3b5; }
+.winner .route-selected { stroke-width: 3; }
+.trial-world { transition: opacity .5s; }
+[data-phase="2"] .unsuccessful, [data-phase="3"] .unsuccessful { opacity: .4; }
+[data-phase="2"] .trial-world .trial-path { animation: trajectory 1.5s linear infinite; stroke-dasharray: 4 3; }
+.chosen-link { opacity: .6; }
+
+/* Task-conditioned abstraction and a rollout array convey the two core ideas. */
+.task-conditioning { fill: #9eabb9; font: 10px ui-monospace, "PingFang SC", monospace; letter-spacing: .3px; }
+.retained-label { fill: #bdcbb3; font-size: 11px; }
+.discarded-label { fill: #727a84; font-size: 11px; }
+.irrelevant-detail { opacity: .18; }
+.rollout-cell { fill: #06090d; stroke: #29323c; stroke-width: .7; }
+.winner .rollout-cell { fill: #10170f; stroke: #adbf9e; stroke-width: 1.2; }
+.rollout-ellipsis { fill: #788798; font-size: 24px; letter-spacing: 7px; }
+[data-phase="0"] .irrelevant-detail { animation: omit-details 3s ease-out infinite; }
+[data-phase="1"] .trial-world .trial-path, [data-phase="2"] .trial-world .trial-path { animation: trajectory 1.2s linear infinite; animation-delay: var(--trial-delay); stroke-dasharray: 4 3; }
+[data-phase="1"] .rollout-cell { stroke: #5e7086; }
+[data-phase="2"] .unsuccessful, [data-phase="3"] .unsuccessful { opacity: .52; }
+@keyframes omit-details { 0% { opacity: .6; } 75%, 100% { opacity: .06; } }
+@media (prefers-reduced-motion: reduce) { .irrelevant-detail { opacity: .12; } }
+
+.phase-navigation { gap: 32px; margin-top: 20px; margin-bottom: 24px; }
+.phase-navigation button { width: 58px; height: 58px; }
+.phase-navigation span { font-size: 9px; }
+[data-phase="0"] .twin-rebuild { animation: reconstruct-twin 3s ease-out infinite; }
+[data-phase="1"] .trial-world { animation: rollout-pulse 1.5s ease-in-out infinite; animation-delay: var(--trial-delay); }
+[data-phase="2"] .winner .rollout-cell { stroke: #dfecd2; stroke-width: 1.8; }
+[data-phase="2"] .chosen-link { stroke-dasharray: 4 4; animation: trajectory 1s linear infinite; }
+@keyframes reconstruct-twin { 0% { opacity: .12; } 70%, 100% { opacity: 1; } }
+@keyframes rollout-pulse { 0%, 100% { opacity: .55; } 50% { opacity: 1; } }
+@media (max-width: 760px) { .phase-navigation { gap: 18px; } .phase-navigation button { width: 52px; height: 52px; } }
+
+/* Rollouts show actual object/arm movement; verdicts appear after the attempt. */
+[data-phase="1"] .trial-world { animation: none; opacity: 1; }
+.trial-world[data-outcome="collision"] .rollout-cell,
+.trial-world[data-outcome="slip"] .rollout-cell { stroke: #a97e6c; }
+.trial-world[data-outcome="success"] .rollout-cell { stroke: #c3d5ae; }
+.rollout-verdict { stroke: #bf8b75; }
+.winner .rollout-verdict { stroke: #d3e5bf; }
+
+/* Rebuild is driven by the same timeline as playback and stage selection. */
+[data-phase="0"] .twin-rebuild, [data-phase="0"] .irrelevant-detail { animation: none; }
+.context-point { fill: #74879c; }
+.task-point { fill: #c5d8eb; }
+.reconstruction-status { fill: #afc3d9; font: 10px ui-monospace, "PingFang SC", monospace; }
+.video-demo video[src*="swap-head-rgbd"] { object-fit: contain; }
+
+/* The library closes the loop from trial experience to reusable assets and skills. */
+.library-surface { fill: #0b1115; stroke: #3c4b52; stroke-width: 1; }
+.evolution-title { fill: #d7e0e5; font-size: 18px; }
+.library-title { fill: #d7e3df; font-size: 18px; }
+.library-item-title { fill: #bfcfca; font-size: 13px; }
+.evolution-round { fill: #8ca499; font: 10px ui-monospace, "PingFang SC", monospace; }
+.library-status { fill: #a8bcb2; font-size: 11px; }
+.evolution-caption { fill: #a0b2ab; font: 11px ui-monospace, "PingFang SC", monospace; letter-spacing: .6px; }
+.distill-link, .skill-reuse-link { stroke: #b2c49e; }
+.experience-link, .asset-reuse-link { stroke: #7f9ca8; }
+.skill-trajectory { fill: none; stroke: #c6d5aa; stroke-width: 1.8; }
+.grasp-point { fill: #d8e7bb; }
+.skill-grasp { fill: none; stroke: #cad8ca; stroke-width: 1.4; }
+[data-phase="2"] .distill-link, [data-phase="4"] .experience-link { stroke-dasharray: 4 4; animation: trajectory 1s linear infinite; }
+.evolution-loop[data-reusing="true"] .asset-reuse-link,
+.evolution-loop[data-reusing="true"] .skill-reuse-link { stroke-dasharray: 4 4; animation: trajectory 1.2s linear infinite; }
+
+/* One quiet frame makes the method and its evolving memory one system. */
+.live-figure { padding: 20px 24px 18px; border: 1px solid #303b45; border-radius: 8px; background: #080c0f; }
+.live-figure .figure-bar { border-top: 0; padding: 0 0 18px; }
+.live-figure .system-diagram { background-image: radial-gradient(#33404a 0.55px, transparent 0.55px); background-size: 22px 22px; }
+.live-figure .overview-controls { border-bottom: 0; padding-bottom: 0; }
+.live-figure .phase-navigation button { background: #080c0f; }
+.live-figure .asset-picker select { background: #080c0f; }
+.library-surface { fill: #111b20; stroke: #52635f; }
+@media (max-width: 760px) { .live-figure { padding: 16px 12px; } }
+
+
+.selected-focus { pointer-events: none; }
+.selected-focus .rollout-cell { fill: #14201d; stroke: #d0dfb8; stroke-width: .6; }
+.selected-focus-label { fill: #d5e4c6; font-size: 14px; }
+@media(max-width:760px) { .phase-navigation { gap: 12px; } .phase-navigation button { width: 46px; height: 46px; } }
+
+.library-record-bg { fill: #10191e; stroke: #35474a; stroke-width: .8; }
+.asset-record-icon { fill: none; stroke: #9dafb2; stroke-width: 1; }
+.library-record-label { fill: #bacbc7; font-size: 9px; }
+.skill-record-meta { fill: #738d86; font: 7px ui-monospace, "PingFang SC", monospace; }
+.skill-record .skill-trajectory { stroke-width: 1.1; }
+
+.object-asset-name { fill: #d0ddd6; font-size: 11px; }
+.object-asset-property { fill: #98aca8; font: 8.5px ui-monospace, "PingFang SC", monospace; }
+.object-grasp-label { fill: #b2c79f; font-size: 9px; }
+.object-thumbnail { stroke: #adc2bf; stroke-width: .7; }
+.asset-grasp-point { fill: #d7ecac; stroke: #3a5542; stroke-width: .7; }
+.asset-parameter-note { fill: #7f9691; font-size: 9px; }
+.skill-record .library-record-label { font-size: 10px; }
+.skill-record .skill-record-meta { font-size: 8px; }

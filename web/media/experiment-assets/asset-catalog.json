@@ -1,0 +1,78 @@
+{
+  "parameter_scope": "Authored USD simulation configuration, not measured physical properties. Asset JSON manifests can disagree; USD values are shown. Missing friction/collision values remain unknown.",
+  "grasp_scope": "Illustrative normalized candidate contact points, not validated grasp poses.",
+  "assets": [
+    {
+      "id": "toy_plane_029",
+      "en": "Airplane",
+      "zh": "飞机",
+      "icon": "plane",
+      "mass": 0.1,
+      "mu_s": 0.5,
+      "mu_d": 0.2,
+      "collision": "convexHull",
+      "grasp": "fuselage",
+      "source": "/mnt/pfs/1011ai/longlibo/robocoliseum_spatial7_environments_20261021/assets/objects/benchmark/toy_plane/benchmark_toy_plane_029/Aligned.usd"
+    },
+    {
+      "id": "cup_105",
+      "en": "Cup",
+      "zh": "杯子",
+      "icon": "cup",
+      "mass": 0.01,
+      "mu_s": 0.5,
+      "mu_d": 0.2,
+      "collision": "convexHull",
+      "grasp": "sidewall",
+      "source": "/mnt/pfs/1011ai/longlibo/robocoliseum_spatial7_environments_20261021/assets/objects/benchmark/cup/benchmark_cup_105/Aligned.usd"
+    },
+    {
+      "id": "bowl_025",
+      "en": "Bowl",
+      "zh": "碗",
+      "icon": "bowl",
+      "mass": 0.2,
+      "mu_s": 0.5,
+      "mu_d": 0.2,
+      "collision": "convexHull",
+      "grasp": "rim",
+      "source": "/mnt/pfs/1011ai/longlibo/robocoliseum_spatial7_environments_20261021/assets/objects/benchmark/bowl/benchmark_bowl_025/Aligned.usd"
+    },
+    {
+      "id": "beer_mug_001",
+      "en": "Mug",
+      "zh": "带柄杯",
+      "icon": "mug",
+      "mass": 0.6764186024665833,
+      "mu_s": null,
+      "mu_d": null,
+      "collision": null,
+      "grasp": "handle",
+      "source": "/mnt/pfs/1011ai/longlibo/robocoliseum_spatial7_environments_20261021/assets/objects/benchmark/beer_mug/benchmark_beer_mug_001/Aligned.usda"
+    },
+    {
+      "id": "paper_cup",
+      "en": "Paper cup",
+      "zh": "纸杯",
+      "icon": "paper",
+      "mass": 0.01,
+      "mu_s": 0.5,
+      "mu_d": 0.2,
+      "collision": "convexDecomposition",
+      "grasp": "sidewall",
+      "source": "/mnt/pfs/1011ai/longlibo/robocoliseum_spatial_fix_20261023/assets_audit/assets/objects/genie/papercup/Aligned.usd"
+    },
+    {
+      "id": "bowl_003",
+      "en": "Bowl / 003",
+      "zh": "碗 / 003",
+      "icon": "bowl",
+      "mass": 0.8393275141716003,
+      "mu_s": null,
+      "mu_d": null,
+      "collision": null,
+      "grasp": "rim",
+      "source": "/mnt/pfs/1011ai/longlibo/robocoliseum_spatial7_environments_20261021/assets/objects/benchmark/bowl/benchmark_bowl_003/Aligned.usda"
+    }
+  ]
+}
