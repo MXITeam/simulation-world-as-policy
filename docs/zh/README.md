@@ -6,6 +6,13 @@
 
 本研究探索如何让 GPT Agent 根据 TRAIN 参考和在线 RGB-D 构建场景，在仿真中测试候选动作，并通过观测反馈完成闭环执行。仓库包含网页、方法图和设计文档，控制器集成为后续工作。
 
+## 实验视频
+
+- [RGB-D 观测](../../web/media/videos/rgbd-observations.mp4) — TRAIN 第 301 回合 · 三相机观测，深度由 RGB 对齐场景渲染。
+- [跨世界抓取对比](../../web/media/videos/grasp-comparison.mp4) — 物理试验回放：源场景与重建资产的抓取成功、失败对比。
+- [放置候选轨迹](../../web/media/videos/candidate-placement.mp4) — W2 仿真 · 第二块积木放偏的候选轨迹。
+- [三层搭塔执行](../../web/media/videos/tower-execution.mp4) — W1 仿真 · 完整三层搭塔执行回合，12× 加速。
+
 ## 方法
 
 ![方法总览](../../assets/figures-v2/overview.png)

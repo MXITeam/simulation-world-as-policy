@@ -222,3 +222,9 @@ function layoutDiagram() {
  svg.querySelector('.feedback-path').setAttribute('d',compact.matches?'M463 828v45H17V245h10':'M1003 438v65H366v-25');
 }
 compact.addEventListener('change',layoutDiagram);layoutDiagram();
+
+// Keep independently controlled experiment videos from playing over one another.
+const experimentVideos = [...document.querySelectorAll('.video-demo video')];
+experimentVideos.forEach(video => video.addEventListener('play', () => {
+  experimentVideos.forEach(other => { if (other !== video) other.pause(); });
+}));
