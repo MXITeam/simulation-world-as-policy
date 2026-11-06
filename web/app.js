@@ -29,28 +29,28 @@ function createArm(parent) {
     'stroke-linecap': 'round', 'stroke-linejoin': 'round'
   });
   parent.append(group);
-  const shells = [rig.upper, rig.forearm].map(length => {
+  const shells = [48, 48, 46, 46, rig.toolLength].map(length => {
     const shell = createSvgElement('g', {});
     shell.append(createSvgElement('rect', {
-      x: 10, y: -6, width: length - 20, height: 12, rx: 5,
+      x: 3, y: -4, width: length - 6, height: 8, rx: 3,
       fill: '#61758f', stroke: '#c4d3e6', 'stroke-width': 0.8
     }));
     shell.append(createSvgElement('rect', {
-      x: 20, y: -3.2, width: length - 40, height: 6.4, rx: 2,
+      x: 4, y: -2, width: Math.max(2, length - 8), height: 4, rx: 2,
       fill: '#172333', stroke: '#8297b3', 'stroke-width': 0.6
     }));
     shell.append(createSvgElement('path', {
-      d: `M18 -8 H${length - 18}`, stroke: '#8aa1be', 'stroke-width': 1.2
+      d: `M4 -6 H${length - 4}`, stroke: '#8aa1be', 'stroke-width': 1.2
     }));
     group.append(shell);
     return shell;
   });
   const links = createSvgElement('path', { stroke: '#d3e1f3', 'stroke-width': 1, opacity: 0.3 });
   group.append(links);
-  const joints = [0, 1, 2].map((index) => {
+  const joints = [0, 1, 2, 3, 4, 5].map((index) => {
     const joint = createSvgElement('g', {});
-    joint.append(createSvgElement('circle', { r: index === 2 ? 6 : 8, fill: '#192535', stroke: '#bccce0', 'stroke-width': 1.2 }));
-    joint.append(createSvgElement('circle', { r: index === 2 ? 3.5 : 5, fill: '#60768f', stroke: '#90a6c1', 'stroke-width': 0.7 }));
+    joint.append(createSvgElement('circle', { r: index >= 4 ? 4 : 6, fill: '#192535', stroke: '#bccce0', 'stroke-width': 1.2 }));
+    joint.append(createSvgElement('circle', { r: index >= 4 ? 2 : 3.5, fill: '#60768f', stroke: '#90a6c1', 'stroke-width': 0.7 }));
     joint.append(createSvgElement('circle', { r: 1.5, fill: '#d7e6f9', stroke: 'none' }));
     [[-4, -4], [4, -4], [-4, 4], [4, 4]].forEach(([cx, cy]) => {
       joint.append(createSvgElement('circle', { cx, cy, r: 0.7, fill: '#d8e4f4', stroke: 'none' }));
@@ -77,8 +77,15 @@ function positionArm(arm, gripX, gripY, opening) {
   const height = Math.sqrt(Math.max(0, rig.upper ** 2 - along ** 2));
   const elbowX = rig.baseX + (along * dx + height * dy) / distance;
   const elbowY = rig.baseY + (along * dy - height * dx) / distance;
-  arm.links.setAttribute('d', `M${rig.baseX} ${rig.baseY} L${elbowX} ${elbowY} L${wristX} ${wristY}`);
-  const points = [[rig.baseX, rig.baseY], [elbowX, elbowY], [wristX, wristY]];
+  // Split each effective link into two fixed-length articulated links.
+  function intermediate(a, b, length, side) {
+    const dx = b[0] - a[0], dy = b[1] - a[1], d = Math.hypot(dx, dy);
+    const h = Math.sqrt(Math.max(0, length * length - d * d / 4));
+    return [(a[0] + b[0]) / 2 - side * dy / d * h, (a[1] + b[1]) / 2 + side * dx / d * h];
+  }
+  const base = [rig.baseX, rig.baseY], elbow = [elbowX, elbowY], wrist = [wristX, wristY];
+  const points = [base, intermediate(base, elbow, 48, -1), elbow, intermediate(elbow, wrist, 46, 1), wrist, [gripX, gripY]];
+  arm.links.setAttribute('d', 'M' + points.map(p => p.join(' ')).join(' L'));
   points.forEach(([x, y], index) => {
     arm.joints[index].setAttribute('transform', `translate(${x} ${y})`);
   });
@@ -228,3 +235,15 @@ const experimentVideos = [...document.querySelectorAll('.video-demo video')];
 experimentVideos.forEach(video => video.addEventListener('play', () => {
   experimentVideos.forEach(other => { if (other !== video) other.pause(); });
 }));
+
+const assetChoice = document.getElementById('asset-choice');
+const assetNames = { airplane: zh ? 'RoboColiseum 飞机' : 'RoboColiseum airplane', block: zh ? '积木' : 'Block', can: zh ? '罐子' : 'Can', bowl: zh ? '碗' : 'Bowl' };
+assetChoice.addEventListener('change', () => {
+  const name = assetNames[assetChoice.value];
+  svg.querySelector('#parcel use').setAttribute('href', '#asset-' + assetChoice.value);
+  svg.querySelector('.asset-name').textContent = (zh ? '资产 / ' : 'ASSET / ') + name;
+  loop.querySelector('.asset-caption').textContent = name + (zh ? ' · 方法示意' : ' · Method schematic');
+  loop.querySelector('.asset-selection-status').textContent = zh ? '已同步到所有环节' : 'Updated throughout the diagram';
+  svg.querySelector('#system-desc').textContent = zh ? `${name}的观测、资产编辑、候选试验与执行示意。` : `Observation, asset editing, candidate trials and execution with ${name}.`;
+  elapsed = 0; renderMotion(elapsed);
+});

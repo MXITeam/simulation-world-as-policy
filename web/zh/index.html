@@ -4,7 +4,7 @@
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#000000">
 <meta name="description" content="以交互式仿真世界与自进化动作策略实现闭环机器人操作。">
-<title>Simulation World as Policy</title><link rel="stylesheet" href="../style.css?v=11">
+<title>Simulation World as Policy</title><link rel="stylesheet" href="../style.css?v=12">
 </head>
 <body>
 <header class="site-header"><a class="wordmark" href="#top">Simulation World as Policy</a><nav aria-label="主导航"><a href="#method">方法</a><a href="#videos">视频</a><a href="#case">案例</a><a href="../index.html" lang="en">English</a></nav></header>
@@ -16,12 +16,15 @@
 </div>
 <figure class="wide live-figure" data-loop>
 <div class="figure-bar"><span>方法示意</span><button type="button" data-play aria-pressed="false">暂停动画</button></div>
-<div class="diagram-scroll" tabindex="0" role="region" aria-label="交互系统图，可横向滚动"><svg class="system-diagram" viewBox="0 0 1200 560" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="system-title system-desc">
+<div class="asset-picker"><label for="asset-choice">编辑物体</label><select id="asset-choice"><option value="airplane">RoboColiseum 飞机</option><option value="block">积木 · 几何示意</option><option value="can">罐子 · 几何示意</option><option value="bowl">碗 · 几何示意</option></select><span class="asset-selection-status" aria-live="polite"></span></div><div class="diagram-scroll" tabindex="0" role="region" aria-label="交互系统图，可横向滚动"><svg class="system-diagram" viewBox="0 0 1200 560" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="system-title system-desc">
 <title id="system-title">Simulation World as Policy — 交互与搜索</title>
 <desc id="system-desc">RGB-D 观测重建飞机操作场景。三个仿真分支尝试不同轨迹，淘汰失败候选，执行选中轨迹，并通过观测更新世界。</desc>
 <defs>
 <marker id="tip" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="m1 1 7 4-7 4" fill="none" stroke="#66758a" stroke-width="1.4"/></marker>
-<g id="parcel"><image href="../media/airplane-asset.svg" x="0" y="-8" width="42" height="44"/></g>
+<g id="asset-airplane"><image href="../media/airplane-asset.svg" x="0" y="-8" width="42" height="44"/></g>
+<g id="asset-block" stroke="#bfd0e7" stroke-width=".7"><path d="M1 5 20-5 40 5 21 16Z" fill="#a2b7d0"/><path d="M1 5v22l20 10V16Z" fill="#536d8d"/><path d="m21 16 19-11v22L21 37Z" fill="#7b95b5"/></g>
+<g id="asset-can" stroke="#b8cce6" stroke-width=".7"><path d="M8 1v29c0 8 26 8 26 0V1" fill="#738da9"/><ellipse cx="21" cy="1" rx="13" ry="6" fill="#bed0e2"/><ellipse cx="21" cy="1" rx="8" ry="3" fill="#7188a2"/><path d="M12 10h18v15H12Z" fill="#30445e"/><path d="M11 4v24" stroke="#d4e1f1"/></g>
+<g id="asset-bowl" stroke="#b8cce6" stroke-width=".7"><path d="M1 5Q3 32 21 33Q39 32 41 5Z" fill="#7d94b0"/><ellipse cx="21" cy="5" rx="20" ry="10" fill="#c5d3e3"/><ellipse cx="21" cy="5" rx="16" ry="7" fill="#34475e"/><path d="M5 12Q10 26 18 27" fill="none" stroke="#d4e1f1"/></g><g id="parcel"><use href="#asset-airplane"/></g>
 <g id="workspace" stroke="#66758a" stroke-width="1.15" stroke-linejoin="round">
 <path d="m0 100 105-57 128 66-104 58Z" fill="#0b0e13" stroke="#66758a"/>
 <path d="m17 64 89-46 111 56-88 49Z" fill="#10151d"/>
@@ -63,7 +66,7 @@
 <g class="asset-editor">
 <rect x="242" y="130" width="256" height="218" rx="3" fill="#070a10" stroke="#66758a"/>
 <path d="M242 157h256M410 157v191" class="section-rule"/>
-<text x="255" y="148" class="micro">资产 / RoboColiseum 飞机</text>
+<text class="asset-name micro" x="255" y="148">资产 / RoboColiseum 飞机</text>
 <text x="422" y="179" class="micro">编辑</text>
 <g class="mesh-object">
 <use href="#parcel" transform="translate(272 213) scale(2.65)"/>
@@ -116,7 +119,7 @@
 <rect x="530" y="489" width="322" height="27" fill="#000000"/>
 <text x="691" y="507" text-anchor="middle" class="note">更新世界与策略</text>
 </svg></div>
-<nav class="phase-navigation" aria-label="动画阶段"><button type="button" data-phase-select="0" aria-label="01 重建"><strong>01</strong><span>重建</span></button><button type="button" data-phase-select="1" aria-label="02 试验"><strong>02</strong><span>试验</span></button><button type="button" data-phase-select="2" aria-label="03 筛选"><strong>03</strong><span>筛选</span></button><button type="button" data-phase-select="3" aria-label="04 执行"><strong>04</strong><span>执行</span></button></nav><div class="diagram-footer"><span class="diagram-phase" aria-live="off"></span><span>RoboColiseum 飞机 · 方法示意</span></div>
+<nav class="phase-navigation" aria-label="动画阶段"><button type="button" data-phase-select="0" aria-label="01 重建"><strong>01</strong><span>重建</span></button><button type="button" data-phase-select="1" aria-label="02 试验"><strong>02</strong><span>试验</span></button><button type="button" data-phase-select="2" aria-label="03 筛选"><strong>03</strong><span>筛选</span></button><button type="button" data-phase-select="3" aria-label="04 执行"><strong>04</strong><span>执行</span></button></nav><div class="diagram-footer"><span class="diagram-phase" aria-live="off"></span><span class="asset-caption">RoboColiseum 飞机 · 方法示意</span></div>
 <figcaption>从观测构建世界，在仿真中探索动作，再通过执行反馈更新。</figcaption></figure>
 <div class="prose introduction"><p>我们提出将仿真作为 GPT Agent 的物理交互世界。Agent 从 TRAIN 参考与在线 RGB-D 构建场景，在仿真中探索动作，再通过执行反馈改进下一次决策。</p></div>
 
@@ -128,4 +131,4 @@
 
 <section class="prose" id="evaluation"><h2>开发结果</h2><p>一次已记录的单包仿真回合在 1,200 个控制步内完成全部六个阶段，原生 E2E = 1。后续将扩展并行搜索与策略进化机制。</p><p class="source-note"><a href="../../assets/figures-v2/README.md">源记录与可编辑框图</a></p></section>
 <footer class="prose"><span>Simulation World as Policy</span><a href="#top">返回顶部 ↑</a></footer>
-</main><script src="../app.js?v=11" defer></script></body></html>
+</main><script src="../app.js?v=12" defer></script></body></html>
