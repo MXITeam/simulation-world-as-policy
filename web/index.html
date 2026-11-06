@@ -4,7 +4,7 @@
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#000000">
 <meta name="description" content="An interactive world simulator and a self-evolving action policy for closed-loop robot manipulation.">
-<title>Simulation World as Policy</title><link rel="stylesheet" href="style.css?v=10">
+<title>Simulation World as Policy</title><link rel="stylesheet" href="style.css?v=11">
 </head>
 <body>
 <header class="site-header"><a class="wordmark" href="#top">Simulation World as Policy</a><nav aria-label="Main navigation"><a href="#method">Method</a><a href="#videos">Videos</a><a href="#case">Case study</a><a href="zh/index.html" lang="zh-CN">中文</a></nav></header>
@@ -18,21 +18,10 @@
 <div class="figure-bar"><span>METHOD SCHEMATIC</span><button type="button" data-play aria-pressed="false">Pause animation</button></div>
 <div class="diagram-scroll" tabindex="0" role="region" aria-label="Interactive system diagram, horizontally scrollable"><svg class="system-diagram" viewBox="0 0 1200 560" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="system-title system-desc">
 <title id="system-title">Simulation World as Policy — interaction and search</title>
-<desc id="system-desc">RGB-D observations reconstruct a package-sorting scene. Three simulation branches test different trajectories. Failed candidates are rejected; the selected trajectory is executed and observations update the world.</desc>
+<desc id="system-desc">RGB-D observations reconstruct an airplane manipulation scene. Three simulation branches test different trajectories. Failed candidates are rejected; the selected trajectory is executed and observations update the world.</desc>
 <defs>
 <marker id="tip" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="m1 1 7 4-7 4" fill="none" stroke="#66758a" stroke-width="1.4"/></marker>
-<g id="parcel" stroke="#9caec4" stroke-width=".65" stroke-linejoin="round">
-<path d="M2 6 9-5 20-8 27-2 38-3 41 8 34 17 38 25 26 33 15 30 5 34-1 22 3 15Z" fill="#7a8da5"/>
-<path d="M2 6 17 2 20-8 9-5Z" fill="#c2cede"/>
-<path d="m17 2 10-4 11-1-9 12Z" fill="#a7b7cd"/>
-<path d="M2 6 17 2 13 16 3 15Z" fill="#8fa2ba"/>
-<path d="m17 2 12 7-7 12-9-5Z" fill="#d0dbea"/>
-<path d="m29 9 12-1-7 9-12 4Z" fill="#768ca8"/>
-<path d="m3 15 10 1 4 11-12 7-6-12Z" fill="#5b708d"/>
-<path d="m13 16 9 5 4 12-9-6Z" fill="#acbdd4"/>
-<path d="m22 21 12-4 4 8-12 8Z" fill="#8b9eb8"/>
-<path d="M9-5 14 4M31 1l-9 7m-16 13 7 3m16 0 4-3" fill="none" stroke="#e0e8f3" stroke-width=".8"/>
-</g>
+<g id="parcel"><image href="media/airplane-asset.svg" x="0" y="-8" width="42" height="44"/></g>
 <g id="workspace" stroke="#66758a" stroke-width="1.15" stroke-linejoin="round">
 <path d="m0 100 105-57 128 66-104 58Z" fill="#0b0e13" stroke="#66758a"/>
 <path d="m17 64 89-46 111 56-88 49Z" fill="#10151d"/>
@@ -64,7 +53,7 @@
 </g>
 <g transform="translate(45 280)">
 <path d="m0 35 67-35 68 35-68 38Z" fill="url(#dots)"/>
-<path d="m48 23 10-12 12 4 10-2 13 12-8 15 5 9-20 11-22-13 4-13Z" fill="url(#dots)" stroke="#66758a" stroke-dasharray="2 4"/>
+<use href="#parcel" transform="translate(48 16) scale(1.15)" opacity=".65"/>
 <text x="0" y="96" class="micro">DEPTH + OBJECT POSE</text>
 </g>
 <path d="M184 195H231" class="connector"/>
@@ -74,7 +63,7 @@
 <g class="asset-editor">
 <rect x="242" y="130" width="256" height="218" rx="3" fill="#070a10" stroke="#66758a"/>
 <path d="M242 157h256M410 157v191" class="section-rule"/>
-<text x="255" y="148" class="micro">ASSET / CRUMPLED PACKAGING</text>
+<text x="255" y="148" class="micro">ASSET / ROBOCOLISEUM AIRPLANE</text>
 <text x="422" y="179" class="micro">EDIT</text>
 <g class="mesh-object">
 <use href="#parcel" transform="translate(272 213) scale(2.65)"/>
@@ -127,7 +116,7 @@
 <rect x="530" y="489" width="322" height="27" fill="#000000"/>
 <text x="691" y="507" text-anchor="middle" class="note">Update the world & refine the policy</text>
 </svg></div>
-<nav class="phase-navigation" aria-label="Animation stages"><button type="button" data-phase-select="0" aria-label="01 Build"><strong>01</strong><span>Build</span></button><button type="button" data-phase-select="1" aria-label="02 Explore"><strong>02</strong><span>Explore</span></button><button type="button" data-phase-select="2" aria-label="03 Select"><strong>03</strong><span>Select</span></button><button type="button" data-phase-select="3" aria-label="04 Execute"><strong>04</strong><span>Execute</span></button></nav><div class="diagram-footer"><span class="diagram-phase" aria-live="off"></span><span>Waste packaging · Method schematic</span></div>
+<nav class="phase-navigation" aria-label="Animation stages"><button type="button" data-phase-select="0" aria-label="01 Build"><strong>01</strong><span>Build</span></button><button type="button" data-phase-select="1" aria-label="02 Explore"><strong>02</strong><span>Explore</span></button><button type="button" data-phase-select="2" aria-label="03 Select"><strong>03</strong><span>Select</span></button><button type="button" data-phase-select="3" aria-label="04 Execute"><strong>04</strong><span>Execute</span></button></nav><div class="diagram-footer"><span class="diagram-phase" aria-live="off"></span><span>RoboColiseum airplane · Method schematic</span></div>
 <figcaption>Build from observations. Explore actions in simulation. Learn from execution.</figcaption></figure>
 <div class="prose introduction"><p>We propose using simulation as a physical interaction world for a GPT agent. The agent builds a scene from TRAIN references and online RGB-D, explores actions in simulation, and uses execution feedback to improve its next decision.</p></div>
 
@@ -139,4 +128,4 @@
 
 <section class="prose" id="evaluation"><h2>Development result</h2><p>One recorded single-package simulation episode completed all six stages in 1,200 control steps, with native E2E = 1. Parallel search and policy evolution are planned extensions.</p><p class="source-note"><a href="../assets/figures-v2/README.md">Source records and editable figures</a></p></section>
 <footer class="prose"><span>Simulation World as Policy</span><a href="#top">Back to top ↑</a></footer>
-</main><script src="app.js?v=10" defer></script></body></html>
+</main><script src="app.js?v=11" defer></script></body></html>
