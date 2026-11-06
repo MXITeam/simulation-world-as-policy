@@ -1,0 +1,21 @@
+Create a polished large scientific research overview figure, landscape 16:9, highest practical resolution, crisp readable English typography, publication-quality for a robotics paper and GitHub README. Title "Simulation World as Policy". Subtitle "Build interactive worlds. Search in parallel. Improve through feedback." White background, restrained pale teal for top stage, pale blue for bottom stage, charcoal text, orange highlights for failures, emerald for validated candidates. Sophisticated detailed miniature 3D robot illustrations, NOT a generic flowchart of text boxes. Precisely aligned generous whitespace, no gradients behind text, clean arrows, no overlapping labels.
+
+One consistent illustrative task throughout: a white dual-arm tabletop robot opens a small drawer, retrieves a red cylindrical object and places it in a blue tray. Bottom fine print "Illustrative task and proposed architecture — not a benchmark result." Do not claim measured success or 95%.
+
+Composition: a small task input vignette at far left across the two rows labeled "Task + RGB-D" with camera, drawer, red object and blue tray. Main figure is two wide rounded stage bands, each with a bold numbered heading, flowing left to right.
+
+TOP BAND heading "01  Interactive World Simulator", small tagline "An interactive physical world for a GPT policy". Three illustrated modules connected by solid teal arrows:
+"Build assets" — training demonstration filmstrip, segmented drawer/red object geometry, small collision meshes; input label "TRAIN data".
+"Reconstruct the scene" — RGB image and depth map becoming a translucent point cloud then an aligned 3D tabletop with the SAME drawer, red object and blue tray; label "Geometry • Pose • Contacts".
+"Calibrate the world" — side-by-side observation versus simulated scene, corresponding contact markers and an error comparison; label "Update pose, geometry and physics".
+Along top band's lower margin ONE thin teal feedback return arrow from calibration back to scene reconstruction labeled "World evolution: reduce observation and interaction error". Keep label in reserved clear whitespace.
+
+BOTTOM BAND heading "02  Self-Evolving Policy", small tagline "Parallel interaction search with experience-driven improvement". Four illustrated modules flowing left to right with blue arrows:
+"Propose actions" — GPT Agent small abstract reasoning icon plus 3 trajectory sketches (no copyrighted brand logo).
+"Explore parallel worlds" — large visually central fan-out into THREE miniature clones of SAME robot drawer scene, each with different colored grasp/approach path. Explicit labels "World 1", "World 2", "World N". One orange cross for collision, one orange cross for unstable grasp, one green check for feasible candidate. Each starts from the same state.
+"Validate & rank" — small filter/ranking visual, labels "Feasibility", "Robustness", "Cost", no fabricated numeric measurements.
+"Execute a segment" — solid physical robot moving red object toward tray, with camera observation icon; label "Act → Observe → Realign".
+Thin blue return loop along bottom band from validation and execution back to propose actions labeled "Policy evolution: update skills, action programs and search".
+Between bands, one clear teal downward arrow from reconstructed scene to parallel worlds labeled "Aligned world snapshot"; one clear upward return arrow at far right from execution to calibration labeled "Execution feedback".
+At very bottom a slim takeaway strip with three concise labels "Observation-grounded worlds" | "Parallel physical trials" | "Closed-loop execution".
+All text exactly spelled, especially "Self-Evolving Policy". Do not add neural network weight training or benchmark victories. Make the robot/scene visuals occupy most of modules, with short labels underneath. Figure should feel like a strong CVPR/CoRL method overview with technical visual density yet strong visual hierarchy.

@@ -1,0 +1,195 @@
+<svg class="system-diagram" data-phase="2" viewBox="0 0 1200 560" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="system-title system-desc">
+<title id="system-title">Simulation World as Policy — interaction and search</title>
+<desc id="system-desc">RGB-D observations reconstruct a package-sorting scene. Three simulation branches test different trajectories. Failed candidates are rejected; the selected trajectory is executed and observations update the world.</desc>
+<style><![CDATA[:root{color-scheme:light;--paper:#f7f6f2;--ink:#252724;--muted:#72766e;--rule:#d8dad2;--accent:#536b56}*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:32px}body{margin:0;background:var(--paper);color:var(--ink);font-family:Arial,"PingFang SC","Microsoft YaHei",sans-serif;font-size:17px;line-height:1.8;-webkit-font-smoothing:antialiased}a{color:inherit;text-decoration-color:#a2a79a;text-underline-offset:5px}a:hover{color:var(--accent)}a:focus-visible{outline:2px solid var(--accent);outline-offset:5px}.site-header{max-width:1056px;margin:0 auto;padding:38px 32px;display:flex;justify-content:space-between;align-items:center;gap:24px}.wordmark{font-family:Georgia,"Times New Roman",serif;font-size:22px;text-decoration:none}.site-header nav{display:flex;gap:25px;font:13px ui-monospace,SFMono-Regular,Consolas,monospace;white-space:nowrap}.prose{max-width:824px;margin-left:auto;margin-right:auto;padding-left:32px;padding-right:32px}.article-title{padding-top:63px}.eyebrow{font:11px ui-monospace,SFMono-Regular,Consolas,monospace;letter-spacing:1.6px;color:var(--muted);margin:0 0 21px}h1,h2,h3{font-family:Georgia,"Times New Roman","Songti SC",serif;font-weight:400}h1{font-size:clamp(46px,5.4vw,72px);line-height:1.08;letter-spacing:-2px;margin:0 0 26px}.subtitle{font-size:21px;line-height:1.5;color:#656b61;max-width:650px;margin:0 0 32px}.metadata{font:12px/1.9 ui-monospace,SFMono-Regular,Consolas,monospace;margin:0 0 49px}.metadata div{display:flex;gap:22px}.metadata dt{width:80px;flex-shrink:0;color:var(--muted)}.metadata dd{margin:0}.metadata dd span{color:#a5a99f;margin:0 6px}p{margin:0 0 22px}.introduction{padding-bottom:13px}.wide{max-width:1320px;margin:32px auto 65px;padding:0 30px}.wide>a{display:block}.wide img{display:block;width:100%;height:auto}.wide figcaption{max-width:760px;margin:20px auto 0;font-size:13px;line-height:1.75;color:var(--muted)}figcaption b{font-weight:500;color:var(--ink)}h2{font-size:36px;line-height:1.3;letter-spacing:-.7px;margin:55px 0 24px}h3{font-size:25px;line-height:1.4;margin:32px 0 15px}section.prose{margin-bottom:40px}.table-wrap{overflow-x:auto;margin:30px 0}table{border-collapse:collapse;width:100%;font-size:14px;line-height:1.7;text-align:left}th,td{padding:16px 0;border-bottom:1px solid var(--rule);vertical-align:top}th{font-weight:400}thead th{border-top:1px solid #92998a;color:var(--muted);font:11px/1.5 ui-monospace,monospace;letter-spacing:.3px}th:first-child{width:38%;padding-right:24px}td{color:#5a6055}.source-note{font-size:13px;color:var(--muted)}footer.prose{margin-top:80px;margin-bottom:35px;padding-top:24px;border-top:1px solid var(--rule);display:flex;justify-content:space-between;gap:20px;font-size:11px;color:var(--muted)}.sr-only{position:absolute;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}html[lang=zh-CN] h1{font-family:Georgia,serif}html[lang=zh-CN] p{line-height:1.95}@media(max-width:700px){body{font-size:16px}.site-header{padding:24px;display:block}.wordmark{font-size:21px}.site-header nav{margin-top:19px;gap:24px;font-size:12px}.prose{padding-left:24px;padding-right:24px}.article-title{padding-top:38px}h1{font-size:49px;letter-spacing:-1.6px}.subtitle{font-size:18px}.metadata{font-size:11px;margin-bottom:34px}.metadata div{gap:12px}.metadata dt{width:65px}.wide{padding:0 12px;margin:24px auto 42px}.wide figcaption{padding:0 12px;font-size:12px}h2{font-size:29px;margin-top:40px}h3{font-size:23px}th:first-child{width:38%;padding-right:15px}table{font-size:12px}footer.prose{margin-top:50px;margin-left:24px;margin-right:24px;padding-left:0;padding-right:0;flex-wrap:wrap}.metadata dd span{margin:0 2px}}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+
+/* Article layout and animated diagrams. */
+.site-header{max-width:824px;padding-top:42px;padding-bottom:38px}
+.wordmark{font-size:25px}
+.article-title{padding-top:22px}
+h1{font-size:clamp(46px,5.2vw,66px);line-height:1.14}
+.subtitle{font-family:Georgia,"Songti SC",serif;font-size:29px}
+.metadata{margin-bottom:28px}
+.wide{max-width:1084px;margin-top:30px;margin-bottom:54px}
+.live-figure{margin-top:28px}
+.figure-bar{display:flex;justify-content:space-between;align-items:center;gap:16px;border-top:1px solid var(--rule);padding:14px 0;font:11px ui-monospace,monospace;letter-spacing:.5px;color:var(--muted)}
+button{font:inherit;color:inherit;cursor:pointer}
+.figure-bar button{border:0;background:none;text-decoration:underline;text-underline-offset:4px;padding:6px}
+button:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
+.live-figure svg{display:block;width:100%;overflow:visible}
+.node-bg{fill:#eeeee7;stroke:#d3d5ca;transition:fill .5s,stroke .5s}
+.world-node.active .node-bg{fill:#e4e9dc;stroke:#728265}
+.node-number{font:11px ui-monospace,monospace;fill:#7c8175}
+.node-title{font:21px Georgia,"Songti SC",serif;fill:var(--ink)}
+.node-sub{font:12px Arial,"PingFang SC",sans-serif;fill:#747a6c}
+.line-art{fill:none;stroke:#596650;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.flow{fill:none;stroke:#7c8a6e;stroke-width:1.8;stroke-dasharray:5 6;animation:flow 1.6s linear infinite}
+.chosen{stroke:#455c38;stroke-width:3}
+.robot-arm{transform-box:fill-box;transform-origin:0% 100%;animation:reach 4.8s ease-in-out infinite}
+.scan-line{stroke:#8f9e7e;animation:scan 3s ease-in-out infinite}
+.pulse-point{fill:#6d835b;animation:pulse 2.4s ease-in-out infinite}
+.step-nav,.scene-tabs{display:flex;justify-content:center;gap:24px;border-bottom:1px solid var(--rule);padding:4px 0 14px}
+.step-nav button,.scene-tabs button{background:none;border:0;border-bottom:1px solid transparent;padding:8px 0;font:12px ui-monospace,"PingFang SC",monospace;color:var(--muted)}
+.step-nav button[aria-pressed=true],.scene-tabs button[aria-selected=true]{border-color:var(--ink);color:var(--ink)}
+.live-figure figcaption{text-align:center}
+.scene-panel{background:#eeeee7}
+.scene-panel[hidden]{display:none}
+.scene-panel img{height:410px;object-fit:contain;background:#e9e9e2}
+.scene-panel p{padding:14px 20px;font-size:13px;margin:0;color:var(--muted)}
+.scene-tabs{justify-content:flex-start;padding:12px 0;gap:30px}
+.case-viewer figcaption{margin-left:0}
+.paused *,.offscreen *{animation-play-state:paused!important}
+@keyframes flow{to{stroke-dashoffset:-22}}
+@keyframes reach{0%,100%{transform:rotate(0)}45%,60%{transform:rotate(12deg)}}
+@keyframes scan{0%,100%{transform:translateY(-15px)}50%{transform:translateY(20px)}}
+@keyframes pulse{50%{opacity:.35}}
+@media(max-width:700px){.site-header{padding:24px}.article-title{padding-top:24px}.subtitle{font-size:23px}.wide{padding:0 20px}.figure-bar{font-size:9px}.step-nav{gap:12px;flex-wrap:wrap}.step-nav button{font-size:10px}.live-figure svg{min-width:600px}.live-figure{overflow-x:auto}.scene-panel img{height:250px}.scene-panel p{padding:12px;font-size:12px}.live-figure figcaption{text-align:left}.wordmark{font-size:23px}}
+@media(prefers-reduced-motion:reduce){.live-figure *{animation:none!important;transition:none!important}}
+@media(max-width:700px){.live-figure svg{min-width:0}.live-figure svg>.flow,.live-figure svg>.node-sub{display:none}.live-figure{overflow:visible}}
+/* Continuous interaction-world diagram */
+.live-figure{max-width:1260px}
+.diagram-scroll{width:100%;overflow-x:auto;overscroll-behavior-inline:contain}
+.live-figure .system-diagram{width:100%;min-width:1000px;display:block;overflow:hidden}
+.system-diagram text{font-family:Arial,"PingFang SC",sans-serif}
+.system-diagram .section-title{font-family:Georgia,"Songti SC",serif;font-size:21px;fill:#353d30}
+.system-diagram .diagram-kicker,.system-diagram .micro{font:10px ui-monospace,"PingFang SC",monospace;letter-spacing:.55px;fill:#808775}
+.system-diagram .small-title{font-size:14px;fill:#3e4936}
+.system-diagram .note{font-size:12px;fill:#7d8474}
+.section-rule{stroke:#cbd0c2;fill:none;stroke-width:1}
+.connector{fill:none;stroke:#9ba68f;stroke-width:1.25;marker-end:url(#tip)}
+.branch-bg{fill:transparent;stroke:#d3d8ca;stroke-width:1}
+.branch-status{font:11px Arial,sans-serif;fill:#7e8477}
+.trial-path{stroke:#8c9f7e;stroke-dashoffset:0}
+.verdict{stroke:#9b8875;opacity:0}
+.selected .verdict{stroke:#647f51}
+.pose-frame{opacity:.45}
+.execution-path,.chosen-link{opacity:.18}
+.moving-parcel{transform:translate(108px,65px) scale(.65)}
+.depth-scan{opacity:.3}
+.diagram-footer{border-top:1px solid var(--rule);padding:16px 0 0;display:flex;justify-content:space-between;gap:20px;font:11px ui-monospace,"PingFang SC",monospace;color:#818776}
+.diagram-phase{color:#536449}
+.live-figure figcaption{display:none}
+[data-phase="0"] .pose-frame{animation:reconstruct 3s ease-in-out infinite}
+[data-phase="0"] .depth-scan{animation:scan-depth 3s ease-in-out infinite}
+[data-phase="1"] .trial-path{animation:trajectory 1s linear infinite}
+[data-phase="1"] .branch-bg{stroke:#9ba98e}
+[data-phase="2"] .rejected{opacity:.38;transition:opacity .8s}
+[data-phase="2"] .verdict,[data-phase="3"] .verdict{opacity:1}
+[data-phase="2"] .selected .branch-bg,[data-phase="3"] .selected .branch-bg{fill:#eaf0e2;stroke:#82956f}
+[data-phase="2"] .selected .branch-status,[data-phase="3"] .selected .branch-status{fill:#526d40}
+[data-phase="2"] .chosen-link,[data-phase="3"] .chosen-link{opacity:1;stroke:#728962}
+[data-phase="3"] .rejected{opacity:.38}
+[data-phase="3"] .execution-path{opacity:1;animation:trajectory 1s linear infinite}
+[data-phase="3"] .moving-parcel{animation:transfer 3s ease-in-out infinite}
+[data-phase="3"] .feedback-path{stroke:#748c64;stroke-dasharray:4 5;animation:trajectory 1s linear infinite}
+@keyframes trajectory{to{stroke-dashoffset:-20}}
+@keyframes reconstruct{0%{opacity:.15}60%,100%{opacity:1}}
+@keyframes scan-depth{0%{transform:translateY(-45px);opacity:.2}50%{opacity:1}100%{transform:translateY(45px);opacity:.2}}
+@keyframes transfer{0%,12%{transform:translate(108px,65px) scale(.65)}45%{transform:translate(146px,20px) scale(.65)}85%,100%{transform:translate(182px,111px) scale(.65)}}
+@media(max-width:700px){.live-figure{padding:0 20px}.live-figure .system-diagram{min-width:940px}.diagram-footer{flex-direction:column;gap:8px}.diagram-scroll{border-right:1px solid var(--rule)}}
+@media(max-width:700px){
+ .live-figure .system-diagram{min-width:0;width:100%}
+ .diagram-scroll{border:0;overflow:visible}
+ .system-diagram .diagram-headings,.system-diagram>.note,.system-diagram>rect,.system-diagram .fork{display:none}
+ .system-diagram .small-title{font-size:16px}
+ .system-diagram .note{font-size:14px}
+ .system-diagram .micro{font-size:12px}
+}
+]]></style><style>.mobile-bridge{display:none}</style><defs>
+<marker id="tip" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="m1 1 7 4-7 4" fill="none" stroke="#74816c" stroke-width="1.4"/></marker>
+<g id="parcel"><path d="m0 0 18-9 23 11-18 10Z" fill="#d6c6a7"/><path d="M0 0v22l23 12V12Z" fill="#bda681"/><path d="m23 12 18-10v22L23 34Z" fill="#e6d9be"/><path d="m9-5 24 12v9" fill="none" stroke="#f8f2e7" stroke-width="3"/></g>
+<g id="workspace" stroke="#8d9387" stroke-width="1.15" stroke-linejoin="round">
+<path d="m0 100 105-57 128 66-104 58Z" fill="#eeeee7" stroke="#d8dbd1"/>
+<path d="m17 64 89-46 111 56-88 49Z" fill="#f4f3ed"/>
+<path d="M17 64v21l112 59v-21m88-49v21l-88 49" fill="#e7e8de"/>
+<path d="M29 91v35m88 18v27m88-69v32" fill="none"/>
+<path d="m122 58 31-16 34 17-31 16Z" fill="#c8d3c2"/><path d="m122 58v7l34 18v-8m31-16v7l-31 17" fill="#b2c0aa"/>
+<path d="m174 119 29-15 28 14-29 17Z" fill="#d9ded2"/><path d="m174 119 4 32 24 12 25-15 4-30-29 17Z" fill="#e5e8de"/><path d="m202 135 0 28" fill="none"/>
+<ellipse cx="53" cy="76" rx="16" ry="8" fill="#b9beb1"/>
+<path d="M53 75 48 41 79 17 107 35" fill="none" stroke="#75836b" stroke-width="9" stroke-linecap="round"/>
+<circle cx="48" cy="41" r="6" fill="#f4f3ed"/><circle cx="79" cy="17" r="6" fill="#f4f3ed"/>
+<path d="m102 32 10 6-2 11m2-11 9-3 7 7" fill="none" stroke="#65745c" stroke-width="2"/>
+</g>
+<pattern id="dots" width="9" height="9" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1" fill="#8d9f83"/></pattern>
+</defs>
+<g class="diagram-headings">
+<text x="26" y="32" class="diagram-kicker">INPUT</text>
+<path d="M228 26H506M554 26H1174" class="section-rule"/>
+<text x="228" y="53" class="section-title">Interactive World Simulator</text>
+<text x="554" y="53" class="section-title">Self-Evolving Policy</text>
+</g>
+<g class="observation">
+<text x="26" y="106" class="small-title">Online RGB-D</text>
+<g transform="translate(27 125)">
+<rect width="152" height="110" rx="3" fill="#e8ece3" stroke="#c8d0c1"/>
+<g transform="translate(4 0) scale(.61)"><use href="#workspace"/><use href="#parcel" transform="translate(108 65) scale(.65)"/></g>
+<path d="M8 8h12M8 8v12m136-12h-12m12 0v12M8 102h12m-12 0V90m136 12h-12m12 0V90" fill="none" stroke="#6d8061"/>
+<path class="depth-scan" d="M6 55h140" stroke="#7d9570" stroke-width="1.3"/>
+<text x="8" y="126" class="micro">RGB</text>
+</g>
+<g transform="translate(45 280)">
+<path d="m0 35 67-35 68 35-68 38Z" fill="url(#dots)"/>
+<path d="m48 23 20-10 25 12v23L70 60 48 47Z" fill="url(#dots)" stroke="#8f9c83" stroke-dasharray="2 4"/>
+<text x="0" y="96" class="micro">DEPTH + OBJECT POSE</text>
+</g>
+<path d="M184 195H231" class="connector"/>
+</g>
+<g class="reconstruction">
+<text x="245" y="106" class="small-title">Reconstruct &amp; edit assets</text>
+<g class="asset-editor">
+<rect x="242" y="130" width="256" height="218" rx="3" fill="#f0f1e9" stroke="#cdd3c4"/>
+<path d="M242 157h256M410 157v191" class="section-rule"/>
+<text x="255" y="148" class="micro">ASSET / PACKAGE</text>
+<text x="422" y="179" class="micro">EDIT</text>
+<g class="mesh-object" fill="none" stroke="#829474" stroke-width="1">
+<path d="m270 211 53-29 59 31-52 31Z M270 211v65l60 32 52-31v-64M330 244v64"/>
+<path d="m283 204 60 33m-47-40 60 33m-46-40 59 32M270 227l60 32 52-31m-112 15 60 32 52-31m-112 15 60 32 52-31M285 219v65m15-57v65m15-57v65m28-63v64m13-71v64m13-71v64" stroke="#bbc5b1"/>
+<path d="M270 211l60 97m-60-32 60-32m0 0 52 33m0-64-52 95" stroke="#c6cfbd"/>
+</g>
+<g class="edit-handles" fill="#f7f6f2" stroke="#5e7850" stroke-width="1.4"><rect x="266" y="207" width="7" height="7"/><rect x="378" y="209" width="7" height="7"/><rect x="326" y="304" width="7" height="7"/>
+<path d="M271 192v-15m110 18v-15m-105 0h100" fill="none"/><path d="m276 177-4 3 4 3m96-6 4 3-4 3" fill="none"/>
+</g>
+<g class="asset-controls">
+<text x="423" y="207" class="micro">Scale</text><path d="M423 219h59" class="section-rule"/><circle class="scale-knob" cx="450" cy="219" r="3" fill="#789365"/>
+<text x="423" y="246" class="micro">Pose</text><path d="M423 258h59" class="section-rule"/><circle cx="464" cy="258" r="3" fill="#789365"/>
+<text x="423" y="285" class="micro">Friction</text><path d="M423 297h59" class="section-rule"/><circle cx="443" cy="297" r="3" fill="#789365"/>
+</g>
+<path d="M257 331h14m-7-7v14" stroke="#8b9b7f"/><text x="280" y="335" class="micro">MESH + COLLISION</text>
+</g>
+<text x="245" y="372" class="note">Compose an interactive scene</text>
+<g transform="translate(255 405)"><path d="M0 0h236" class="section-rule"/><text y="25" class="micro">TRAIN REFERENCES</text><text y="47" class="note">Asset parts &amp; action programs</text><path d="M118-8v-16" class="connector"/></g>
+</g>
+<path class="mobile-bridge connector" d="M365 478v20H12v164h15"/><g class="search">
+<path d="M489 247h32V144h34M521 247h34M521 247v103h34" class="connector fork"/>
+<text x="555" y="106" class="small-title">Parallel interaction trials</text>
+<g class="branch rejected" data-branch="0"><rect x="552" y="124" width="266" height="89" rx="3" class="branch-bg"/><text x="564" y="142" class="micro">01</text><g transform="translate(591 134) scale(.8)">
+<path d="m5 53 61-32 85 40-61 28Z" fill="#edf0e6" stroke="#d3d9ca"/>
+<path d="m112 47 23-12 20 10-23 12Z" fill="#cfdbc4" stroke="#9aad8c"/>
+<use href="#parcel" transform="translate(21 44) scale(.4)"/>
+<path class="trial-path" d="M22 61Q25 2 70 43T139 46" fill="none" stroke-width="1.8" stroke-dasharray="3 4"/>
+<circle cx="22" cy="61" r="2" fill="#829574"/>
+<path d="M62 40v-24h14v31" fill="#d9d5c9" stroke="#a99f89"/><path d="m65 30 10 10m0-10-10 10" stroke="#a18c73"/></g><text x="752" y="172" class="branch-status" text-anchor="middle">Collision</text><path class="verdict" d="M793 162l10 10m0-10-10 10" fill="none" stroke-width="1.5"/></g><g class="branch selected" data-branch="1"><rect x="552" y="227" width="266" height="89" rx="3" class="branch-bg"/><text x="564" y="245" class="micro">02</text><g transform="translate(591 237) scale(.8)">
+<path d="m5 53 61-32 85 40-61 28Z" fill="#edf0e6" stroke="#d3d9ca"/>
+<path d="m112 47 23-12 20 10-23 12Z" fill="#cfdbc4" stroke="#9aad8c"/>
+<use href="#parcel" transform="translate(21 44) scale(.4)"/>
+<path class="trial-path" d="M22 61Q71 -12 139 46" fill="none" stroke-width="1.8" stroke-dasharray="3 4"/>
+<circle cx="22" cy="61" r="2" fill="#829574"/>
+<path d="m131 35 6-6m-6 6-6-3m12-3 4 5" fill="none" stroke="#637e51" stroke-width="1.4"/></g><text x="752" y="275" class="branch-status" text-anchor="middle">Selected</text><path class="verdict" d="M791 269l5 5 10-12" fill="none" stroke-width="1.5"/></g><g class="branch rejected" data-branch="2"><rect x="552" y="330" width="266" height="89" rx="3" class="branch-bg"/><text x="564" y="348" class="micro">03</text><g transform="translate(591 340) scale(.8)">
+<path d="m5 53 61-32 85 40-61 28Z" fill="#edf0e6" stroke="#d3d9ca"/>
+<path d="m112 47 23-12 20 10-23 12Z" fill="#cfdbc4" stroke="#9aad8c"/>
+<use href="#parcel" transform="translate(21 44) scale(.4)"/>
+<path class="trial-path" d="M22 61Q64 82 139 46" fill="none" stroke-width="1.8" stroke-dasharray="3 4"/>
+<circle cx="22" cy="61" r="2" fill="#829574"/>
+<path d="m128 37 13-8 11 14-14 8Z" fill="none" stroke="#a18c73" transform="rotate(20 140 40)"/></g><text x="752" y="378" class="branch-status" text-anchor="middle">Unstable</text><path class="verdict" d="M793 368l10 10m0-10-10 10" fill="none" stroke-width="1.5"/></g><path d="M818 272h56" class="connector chosen-link"/>
+<text x="853" y="239" class="micro" text-anchor="middle">VERIFY</text>
+</g>
+<g class="execution">
+<text x="884" y="106" class="small-title">Execute the selected action</text>
+<g transform="translate(877 158)"><use href="#workspace"/><use class="moving-parcel" href="#parcel" transform="translate(108 65) scale(.65)"/><path d="M114 66Q156 5 186 113" fill="none" stroke="#6c825e" stroke-width="1.6" stroke-dasharray="4 5" class="execution-path"/></g>
+<text x="886" y="369" class="note">Follow · observe · realign</text>
+<circle cx="888" cy="414" r="3" fill="#728767"/><text x="899" y="418" class="micro">NEW OBSERVATION</text>
+</g>
+<path d="M1003 438v65H366v-25" class="connector feedback-path"/>
+<rect x="530" y="489" width="322" height="27" fill="#f7f6f2"/>
+<text x="691" y="507" text-anchor="middle" class="note">Update the world &amp; refine the policy</text>
+</svg>
