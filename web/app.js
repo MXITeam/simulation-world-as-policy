@@ -308,6 +308,60 @@ function ease(value) {
   const t = Math.max(0, Math.min(1, value));
   return t * t * (3 - 2 * t);
 }
+const assetTurntables = [];
+async function initializeAssetTurntables() {
+  const base = new URL('media/experiment-assets/turntables/', document.querySelector('script[src*="app.js"]').src);
+  const response = await fetch(new URL('catalog.json', base));
+  if (!response.ok) throw new Error(`Asset turntables: HTTP ${response.status}`);
+  const catalog = await response.json();
+  await Promise.all(Object.values(catalog.models).map(async model => {
+    const image = new Image();
+    image.src = `${new URL(model.file, base).href}?v=36`;
+    await image.decode();
+  }));
+  const models = {
+    toy_plane_029: 'plane', cup_105: 'cup', bowl_025: 'bowl',
+    beer_mug_001: 'mug', paper_cup: 'paper', bowl_003: 'bowl'
+  };
+  svg.querySelectorAll('.object-asset-record').forEach((record, index) => {
+    const model = catalog.models[models[record.dataset.assetId]];
+    const thumbnail = record.querySelector('.object-thumbnail');
+    if (!model || !thumbnail) return;
+    const clipId = `asset-turntable-${index}`;
+    const clip = createSvgElement('clipPath', { id: clipId });
+    clip.append(createSvgElement('rect', { width: 56, height: 56 }));
+    svg.querySelector('defs').append(clip);
+    const viewport = createSvgElement('g', { 'clip-path': `url(#${clipId})` });
+    const image = createSvgElement('image', {
+      href: `${new URL(model.file, base).href}?v=36`,
+      width: catalog.columns * 56, height: catalog.rows * 56,
+      preserveAspectRatio: 'none', class: 'asset-turntable-sprite'
+    });
+    viewport.append(image);
+    const contacts = [0, 1].map(() => createSvgElement('circle', {
+      r: 2.3, class: 'asset-grasp-point'
+    }));
+    thumbnail.replaceChildren(viewport, ...contacts);
+    assetTurntables.push({ image, contacts, model, columns: catalog.columns,
+      frames: catalog.frames, offset: index * 11, frame: -1 });
+  });
+  renderAssetTurntables(elapsed);
+}
+function renderAssetTurntables(milliseconds) {
+  assetTurntables.forEach(asset => {
+    const frame = (Math.floor(milliseconds / 15000 * asset.frames) + asset.offset) % asset.frames;
+    if (asset.frame === frame) return;
+    asset.frame = frame;
+    asset.image.setAttribute('x', -(frame % asset.columns) * 56);
+    asset.image.setAttribute('y', -Math.floor(frame / asset.columns) * 56);
+    asset.contacts.forEach((contact, index) => {
+      const [x, y] = asset.model.grasp_points[frame][index];
+      contact.setAttribute('cx', x);
+      contact.setAttribute('cy', y);
+    });
+  });
+}
+
 function renderMotion(milliseconds) {
   const phase = Math.floor(milliseconds / 3000);
   const u = (milliseconds % 3000) / 3000;
@@ -321,6 +375,7 @@ function renderMotion(milliseconds) {
   renderReconstruction(phase, u);
   renderEvolution(phase, u);
   renderSelectionZoom(phase, u);
+  renderAssetTurntables(milliseconds);
 
   let x = 108, y = 65, gripX = 107, gripY = 35, opening = 15;
   if (phase === 4) {
@@ -411,3 +466,6 @@ const experimentVideos = [...document.querySelectorAll('.video-demo video')];
 experimentVideos.forEach(video => video.addEventListener('play', () => {
   experimentVideos.forEach(other => { if (other !== video) other.pause(); });
 }));
+
+// Retain static thumbnails if a preview sequence cannot load.
+initializeAssetTurntables().catch(error => console.warn(error.message));

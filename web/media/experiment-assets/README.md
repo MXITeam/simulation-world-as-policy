@@ -25,3 +25,7 @@ robot/link-1.png through link-7.png are orthographic renders of the actual arm_l
 ## Object asset catalog
 
 asset-catalog.json records authored USD masses, static/dynamic friction and collision approximations read from the user-provided assets. These are simulation configuration values, not measured properties. The source JSON manifest and USD masses disagree for some models; cards use the USD values. Cup and bowl silhouettes are schematic thumbnails. Green points mark illustrative grasp candidates, not verified grasp poses. Missing mug/bowl material and collision data remain pending rather than inheriting defaults.
+
+## Asset turntable previews
+
+turntables/ contains 96-frame transparent yaw-turntable sheets (8 columns) and projected candidate contact positions in catalog.json. Plane geometry comes from the supplied PLY, welded on a 2 mm display grid. Cup, mug, bowl and paper-cup previews are procedural illustrative geometries matching the previous schematic thumbnails; they are not reconstructions of the linked USD instances. Physics text remains sourced from asset-catalog.json. The shared animation clock drives orientation, projected grasp points, pause/play and reduced-motion behavior.
