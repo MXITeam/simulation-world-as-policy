@@ -8,10 +8,11 @@
 
 ## 实验视频
 
-- [RGB-D 观测](../../web/media/videos/rgbd-observations.mp4) — TRAIN 第 301 回合 · 三相机观测，深度由 RGB 对齐场景渲染。
-- [跨世界抓取对比](../../web/media/videos/grasp-comparison.mp4) — 物理试验回放：源场景与重建资产的抓取成功、失败对比。
-- [放置候选轨迹](../../web/media/videos/candidate-placement.mp4) — W2 仿真 · 第二块积木放偏的候选轨迹。
-- [三层搭塔执行](../../web/media/videos/tower-execution.mp4) — W1 仿真 · 完整三层搭塔执行回合，12× 加速。
+先看建模，再看 RoboColiseum 中的执行案例。
+
+- [飞机建模与物理回放](../../web/media/videos/modeling.mp4)
+- [整理货架成功回合](../../web/media/videos/shelf-success.mp4)
+
 
 ## 方法
 

@@ -8,10 +8,11 @@ This research explores how a GPT agent can build a scene from TRAIN references a
 
 ## Experiment videos
 
-- [RGB-D observations](web/media/videos/rgbd-observations.mp4) — TRAIN episode 301 · three camera views with rendered depth from an RGB-aligned scene.
-- [Grasp outcomes across worlds](web/media/videos/grasp-comparison.mp4) — Recorded physics trials: source-scene and reconstructed-asset success and failure pairs.
-- [A placement candidate](web/media/videos/candidate-placement.mp4) — W2 simulation · a candidate that places the second block off target.
-- [Three-block tower execution](web/media/videos/tower-execution.mp4) — W1 simulation · the complete recorded tower-building episode, at 12× speed.
+From modeling an asset to executing a task in RoboColiseum.
+
+- [Airplane modeling and physics replay](web/media/videos/modeling.mp4)
+- [Successful shelf-stocking episode](web/media/videos/shelf-success.mp4)
+
 
 ## Method
 

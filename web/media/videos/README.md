@@ -1,10 +1,11 @@
-# Experiment recordings
+# Website videos
 
-These clips cover separate development experiments. Videos are H.264 MP4 with browser playback controls; frames are not interpolated. Audio is omitted.
+## Modeling
 
-- `rgbd-observations.mp4`: `train_scene_rgbd_20261105/media/full_train_rgbd.mp4`. TRAIN episode 301, 115 frames and three cameras. Depth is rendered from an approximate RGB-aligned source scene; source motion follows RGB-estimated object poses.
-- `grasp-comparison.mp4`: `train_scene_rgbd_success_failure_20261105/success_failure.mp4`. Evidence replay of recorded physics trials comparing the source-scene fixture and reconstructed airplane. Includes both agreement and disagreement in success/failure. These are in-sample development trials.
-- `candidate-placement.mp4`: `tower/pr_video_pair/02_W2_第二块放偏_完整候选.mp4`. Complete W2 candidate with an off-target second-block placement.
-- `tower-execution.mp4`: `tower/pr_video_pair/01_MXI_三层搭塔成功_完整回合.webm`. Complete W1 tower-building simulation recording, presented at 12× speed (about 90 seconds).
+`modeling.mp4` shows TRAIN episode 301 beside a physics replay of the reconstructed airplane mesh. Source: `train_scene_rgbd_20261105/w2/comparison/native_action_rgb_comparison.mp4`. The first two panels are retained, diagnostic overlays are cropped, and playback is slowed to 0.5×. The reconstruction uses all 115 frames and three cameras; depth comes from an approximate RGB-aligned source scene. This is an offline modeling experiment.
 
-The package-sorting result described elsewhere is a separate episode.
+## Successful execution
+
+`shelf-success.mp4` is the main-camera crop of `shelf_w1w2_case001_20261106/evidence_scene_01/w1_online_execution.mp4`. It retains the supplied recording timing and complete clip. The recording is a simulation rollout of `stock_and_straighten_shelf`, scene 01, case 1, seed 1. The archived native evaluation reports E2E = 1 and five subtask scores of 1. [Evaluation extract](shelf-result.json).
+
+Earlier gallery clips remain available in this directory but are no longer featured on the website.

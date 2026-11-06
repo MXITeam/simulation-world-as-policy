@@ -231,7 +231,7 @@ function layoutDiagram() {
 compact.addEventListener('change',layoutDiagram);layoutDiagram();
 
 // Keep independently controlled experiment videos from playing over one another.
-const experimentVideos = [...document.querySelectorAll('.video-demo video')];
+const experimentVideos = [...document.querySelectorAll('.story-video')];
 experimentVideos.forEach(video => video.addEventListener('play', () => {
   experimentVideos.forEach(other => { if (other !== video) other.pause(); });
 }));

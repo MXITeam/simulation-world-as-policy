@@ -1,0 +1,34 @@
+{
+  "task": "stock_and_straighten_shelf",
+  "scene_index": 1,
+  "case": 1,
+  "seed": 1,
+  "step_scores": [
+    {
+      "step": 0,
+      "name": "Follow",
+      "score": 1.0
+    },
+    {
+      "step": 1,
+      "name": "PickUpOnGripper",
+      "score": 1.0
+    },
+    {
+      "step": 2,
+      "name": "InBBox",
+      "score": 1.0
+    },
+    {
+      "step": 3,
+      "name": "Follow",
+      "score": 1.0
+    },
+    {
+      "step": 4,
+      "name": "Upright",
+      "score": 1.0
+    }
+  ],
+  "E2E": 1
+}
